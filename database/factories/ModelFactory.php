@@ -19,3 +19,26 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Models\DeviceType::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name
+    ];
+});
+
+$factory->define(App\Models\Process::class, function (Faker\Generator $faker) {
+    return [
+        'email' => $faker->safeEmail,
+        'expires_at' => null,
+        'start_at' => null,
+        'finished_at' => null
+    ];
+});
+
+$factory->define(App\Models\UserAgent::class, function (Faker\Generator $faker) {
+    return [
+        'ua_string' => $faker->userAgent,
+        'process_id' => factory(App\Models\Process::class)->create()->id,
+        'device_type_id' => factory(App\Models\DeviceType::class)->create()->id
+    ];
+});

@@ -1,16 +1,28 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::post('resource', [
+    'as' => 'process.store',
+    'uses' => 'ProcessController@store'
+]);
+
+Route::get('resource/{process}/upload', [
+    'as' => 'process.upload',
+    'uses' => 'ProcessController@upload'
+]);
+
+Route::patch('resource/{process}/', [
+    'as' => 'process.update',
+    'uses' => 'ProcessController@update'
+]);
+
+Route::get('resource/{process}/', [
+    'as' => 'process.show',
+    'uses' => 'ProcessController@show'
+]);
+
+Route::get('resource/{process}/upload-success', [
+    'as' => 'route.messages.success',
+    'uses' => 'ProcessController@success'
+]);

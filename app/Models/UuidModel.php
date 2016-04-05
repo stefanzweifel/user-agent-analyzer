@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @see http://garrettstjohn.com/article/using-uuids-laravel-eloquent-orm/
  */
-class UuidModel extends Eloquent
+class UuidModel extends Model
 {
     /**
      * Indicates if the IDs are auto-incrementing.
