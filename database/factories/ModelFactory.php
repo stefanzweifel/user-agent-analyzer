@@ -28,10 +28,10 @@ $factory->define(App\Models\DeviceType::class, function (Faker\Generator $faker)
 
 $factory->define(App\Models\Process::class, function (Faker\Generator $faker) {
     return [
-        'email' => $faker->safeEmail,
-        'expires_at' => null,
-        'start_at' => null,
-        'finished_at' => null
+        'email'       => $faker->safeEmail,
+        'start_at'    => null,
+        'finished_at' => null,
+        'expires_at'  => Carbon\Carbon::parse("tomorrow")
     ];
 });
 

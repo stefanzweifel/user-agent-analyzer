@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\UserAgent;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
@@ -14,6 +15,28 @@ class Process extends UuidModel implements HasMedia
     protected $fillable = ['email', 'finished_at', 'expires_at', 'start_at', 'finished_at'];
 
     protected $dates = ['expires_at', 'finished_at', 'start_at'];
+
+    /**
+     * Retrieve the Email attribute.
+     *
+     * @param   mixed
+     * @return  string
+     */
+    public function getEmailAttribute($value)
+    {
+        return Crypt::decrypt($value);
+    }
+
+    /**
+     * Set the email attribute.
+     *
+     * @param   mixed
+     * @return  void
+     */
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = Crypt::encrypt($value);
+    }
 
     /**
      * Relationship with the UserAgent model.
@@ -30,11 +53,19 @@ class Process extends UuidModel implements HasMedia
         return $this->expires_at->isPast();
     }
 
-
-
     public function isFinished()
     {
-        return $this->finished_at->isPast();
+        return !is_null($this->finished_at) && $this->finished_at->isPast();
+    }
+
+    public function hasReceivedFile()
+    {
+        return (count($this->getMedia('csv-files')) > 0);
+    }
+
+    public function isProcessing()
+    {
+        return !is_null($this->start_at) && $this->start_at->isPast() && !$this->isFinished();
     }
 
 }

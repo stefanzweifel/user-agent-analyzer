@@ -42,6 +42,6 @@ class HomeControllerTest extends TestCase
         $this->visit('/')
             ->type('foo@bar.com', 'email')
             ->press("Let's do this!")
-            ->seeInDatabase('processes', ['email' => 'foo@bar.com']);
+            ->seePageIs('/');
     }
 }

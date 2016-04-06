@@ -51,8 +51,8 @@ class UploadFileForProcessTest extends TestCase
         $this->assertEquals(404, $response->status());
 
         // TODO
-        $response = $this->visit("resource/not-an-id/upload")
-            ->see('Sorry, the page you are looking for could not be found.');
+        // $response = $this->visit("resource/not-an-id/upload")
+        //     ->see('Sorry, the page you are looking for could not be found.');
     }
 
     /** @test */
@@ -67,27 +67,33 @@ class UploadFileForProcessTest extends TestCase
     /** @test */
     public function it_shows_error_message_if_we_already_got_a_file_for_this_process()
     {
-        $process = factory(Process::class)->create();
+        $pathToTestFile = base_path('tests/support/ua-test.csv');
+        $process        = factory(Process::class)->create();
+        $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
 
-        $this->visit("resource/{$process->id}/upload")
-            ->see('We already got a file for this process.');
+        $response = $this->visit("resource/{$process->id}/upload")
+            ->seeJson(['message' => 'We already got a file for this process.']);
     }
 
     /** @test */
     public function it_shows_message_if_process_is_already_finished()
     {
-        $process = factory(Process::class)->create(['finished_at' => Carbon::now()]);
+        $pathToTestFile = base_path('tests/support/ua-test.csv');
+        $process        = factory(Process::class)->create(['finished_at' => Carbon::parse("1 minute ago")]);
+        $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
 
         $this->visit("resource/{$process->id}/upload")
-            ->see('This Process is already finished.');
+            ->seeJson(['message' => 'Process already done.']);
     }
 
     /** @test */
     public function it_shows_message_if_we_are_processing_this_process()
     {
+        $pathToTestFile = base_path('tests/support/ua-test.csv');
         $process = factory(Process::class)->create(['start_at' => Carbon::parse('1 minute ago')]);
+        $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
 
         $this->visit("resource/{$process->id}/upload")
-            ->see("We're currently processing your files.");
+            ->seeJson(['message' => "Files are being processed."]);
     }
 }

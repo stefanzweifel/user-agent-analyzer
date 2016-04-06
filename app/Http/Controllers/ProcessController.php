@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Requests\CreateProcessRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Jobs\SendUploadNotificationMail;
+use App\Jobs\ReadCsvFile;
 use App\Models\Process;
 use Illuminate\Http\Request;
 
@@ -37,9 +38,28 @@ class ProcessController extends Controller
      */
     public function upload(Request $request, Process $process)
     {
+        if ($process->isFinished()) {
+            return [
+                'message' => 'Process already done.'
+            ];
+        }
+
+        if ($process->isProcessing()) {
+            return [
+                'message' => 'Files are being processed.'
+            ];
+        }
+
         if ($process->isExpired()) {
             return [
                 'message' => 'Process expired.'
+            ];
+        }
+
+        if ($process->hasReceivedFile())
+        {
+            return [
+                'message' => 'We already got a file for this process.'
             ];
         }
 
@@ -57,7 +77,7 @@ class ProcessController extends Controller
     {
         $process->addMedia($request->file('file'))->toCollection('csv-files');
 
-        $this->dispatch(new \App\Jobs\ReadCsvFile($process));
+        $this->dispatch(new ReadCsvFile($process));
 
         return redirect()->route('route.messages.success', [$process->id]);
     }

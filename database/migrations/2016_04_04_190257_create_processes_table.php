@@ -16,7 +16,7 @@ class CreateProcessesTable extends Migration
             $table->string('id', 36);
             $table->string('email');
             $table->string('column')->nullable();
-            $table->timestamp('expires_at');
+            $table->timestamp('expires_at')->nullable();
             $table->timestamp('start_at')->nullable();
             $table->timestamp('finished_at')->nullable();
             $table->timestamps();
