@@ -15,7 +15,7 @@ class UploadFileForProcessTest extends TestCase
     {
         $process = factory(Process::class)->create();
 
-        $this->visit("resource/{$process->id}/upload")
+        $this->visit("resource/{$process->id}")
             ->see('Upload File');
     }
 
@@ -27,9 +27,10 @@ class UploadFileForProcessTest extends TestCase
         $process = factory(Process::class)->create();
         $pathToTestFile = base_path('tests/support/ua-test.csv');
 
-        $this->visit("resource/{$process->id}/upload")
+        $this->visit("resource/{$process->id}")
             ->attach($pathToTestFile, 'file')
-            ->press('Upload and start process');
+            ->press('Upload and start process')
+            ->seePageIs("resource/{$process->id}");
     }
 
     /** @test */
@@ -38,7 +39,7 @@ class UploadFileForProcessTest extends TestCase
         $process = factory(Process::class)->create();
         $pathToTestFile = base_path('tests/support/not-a-csv.jpg');
 
-        $this->visit("resource/{$process->id}/upload")
+        $this->visit("resource/{$process->id}")
             ->attach($pathToTestFile, 'file')
             ->press('Upload and start process')
             ->see('The file must be a file of type: csv, txt.');
@@ -47,7 +48,7 @@ class UploadFileForProcessTest extends TestCase
     /** @test */
     public function it_shows_error_message_if_process_was_not_found()
     {
-        $response = $this->call('GET', "resource/not-an-id/upload");
+        $response = $this->call('GET', "resource/not-an-id");
         $this->assertEquals(404, $response->status());
 
         // TODO
@@ -60,7 +61,7 @@ class UploadFileForProcessTest extends TestCase
     {
         $process = factory(Process::class)->create(['expires_at' => Carbon::parse('2 days ago')]);
 
-        $this->visit("resource/{$process->id}/upload")
+        $this->visit("resource/{$process->id}")
             ->seeJson(['message' => 'Process expired.']);
     }
 
@@ -71,7 +72,7 @@ class UploadFileForProcessTest extends TestCase
         $process        = factory(Process::class)->create();
         $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
 
-        $response = $this->visit("resource/{$process->id}/upload")
+        $response = $this->visit("resource/{$process->id}")
             ->seeJson(['message' => 'We already got a file for this process.']);
     }
 
@@ -82,7 +83,7 @@ class UploadFileForProcessTest extends TestCase
         $process        = factory(Process::class)->create(['finished_at' => Carbon::parse("1 minute ago")]);
         $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
 
-        $this->visit("resource/{$process->id}/upload")
+        $this->visit("resource/{$process->id}")
             ->seeJson(['message' => 'Process already done.']);
     }
 
@@ -93,7 +94,7 @@ class UploadFileForProcessTest extends TestCase
         $process = factory(Process::class)->create(['start_at' => Carbon::parse('1 minute ago')]);
         $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
 
-        $this->visit("resource/{$process->id}/upload")
+        $this->visit("resource/{$process->id}")
             ->seeJson(['message' => "Files are being processed."]);
     }
 }

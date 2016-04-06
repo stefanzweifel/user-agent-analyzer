@@ -15,7 +15,7 @@ class SendUploadNotificationTest extends TestCase
     public function it_sends_email_to_user()
     {
         $process = factory(Process::class)->create(['email' => 'foo@bar.com']);
-        $linkToUpload = route('process.upload', [$process->id]);
+        $linkToUpload = route('process.show', [$process->id]);
 
         $mail = $this->app->make('Illuminate\Contracts\Mail\Mailer');
 

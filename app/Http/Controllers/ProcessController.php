@@ -36,8 +36,9 @@ class ProcessController extends Controller
      * @param  Process $process
      * @return View
      */
-    public function upload(Request $request, Process $process)
+    public function show(Request $request, Process $process)
     {
+        // TODO: Move this Logic into Middlewares
         if ($process->isFinished()) {
             return [
                 'message' => 'Process already done.'
@@ -79,18 +80,7 @@ class ProcessController extends Controller
 
         $this->dispatch(new ReadCsvFile($process));
 
-        return redirect()->route('route.messages.success', [$process->id]);
-    }
-
-    /**
-     * Display Success Message
-     * @param  Request $request
-     * @param  Process $process
-     * @return View
-     */
-    public function success(Request $request, Process $process)
-    {
-        return view('upload-success', compact('process'));
+        return redirect()->route('process.show', [$process->id]);
     }
 
 }
