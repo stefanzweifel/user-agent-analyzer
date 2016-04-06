@@ -8,16 +8,6 @@ class HomeControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $this->assertTrue(true);
-    }
-
     /** @test */
     public function it_shows_sign_up_form()
     {
