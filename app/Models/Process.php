@@ -68,4 +68,14 @@ class Process extends UuidModel implements HasMedia
         return !is_null($this->start_at) && $this->start_at->isPast() && !$this->isFinished();
     }
 
+    public function getReport()
+    {
+        return $this->userAgents()
+            ->select([
+                \DB::raw("count('id') as count"),
+                'device_type_id'
+            ])
+            ->groupBy('device_type_id')->get();
+    }
+
 }

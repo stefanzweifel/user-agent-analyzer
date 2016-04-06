@@ -40,6 +40,10 @@ class ProcessController extends Controller
     {
         // TODO: Move this Logic into Middlewares
         if ($process->isFinished()) {
+
+            // We should display data here
+            $report = $process->getReport();
+
             return [
                 'message' => 'Process already done.'
             ];
