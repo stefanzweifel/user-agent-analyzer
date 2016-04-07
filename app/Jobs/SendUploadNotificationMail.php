@@ -35,7 +35,7 @@ class SendUploadNotificationMail extends Job implements ShouldQueue
         $mail->send('emails.upload-notification', ['process' => $this->process], function($m){
 
             $m->to($this->process->email);
-            $m->subject("[UA Analyzer] We're ready to receive your data");
+            $m->subject("We're ready to receive your User Agent data");
 
         });
     }

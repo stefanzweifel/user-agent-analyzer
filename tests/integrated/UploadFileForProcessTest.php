@@ -16,7 +16,7 @@ class UploadFileForProcessTest extends TestCase
         $process = factory(Process::class)->create();
 
         $this->visit("resource/{$process->id}")
-            ->see('Upload File');
+            ->see('Upload');
     }
 
     /** @test */
@@ -62,7 +62,7 @@ class UploadFileForProcessTest extends TestCase
         $process = factory(Process::class)->create(['expires_at' => Carbon::parse('2 days ago')]);
 
         $this->visit("resource/{$process->id}")
-            ->seeJson(['message' => 'Process expired.']);
+            ->see('Sorry, but your link expired.');
     }
 
     /** @test */
@@ -73,7 +73,7 @@ class UploadFileForProcessTest extends TestCase
         $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
 
         $response = $this->visit("resource/{$process->id}")
-            ->seeJson(['message' => 'We already got a file for this process.']);
+            ->see('We already got a file for this process.');
     }
 
     /** @test */
@@ -84,7 +84,7 @@ class UploadFileForProcessTest extends TestCase
         $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
 
         $this->visit("resource/{$process->id}")
-            ->seeJson(['message' => 'Process already done.']);
+            ->see("Data processed. Here's your report.");
     }
 
     /** @test */
@@ -95,6 +95,6 @@ class UploadFileForProcessTest extends TestCase
         $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
 
         $this->visit("resource/{$process->id}")
-            ->seeJson(['message' => "Files are being processed."]);
+            ->see("We're currently processing your uploaded file.");
     }
 }

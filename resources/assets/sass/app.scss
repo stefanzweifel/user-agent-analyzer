@@ -1,1 +1,14 @@
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+html, body {
+    font-family: 'Roboto';
+    color: #212121;
+}
+
+.brand {
+    color: #D32F2F;
+}
+
+.red {
+    color: #e53935;
+}

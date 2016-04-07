@@ -38,37 +38,13 @@ class ProcessController extends Controller
      */
     public function show(Request $request, Process $process)
     {
-        // TODO: Move this Logic into Middlewares
         if ($process->isFinished()) {
 
             // We should display data here
             $report = $process->getReport();
-
-            return [
-                'message' => 'Process already done.'
-            ];
         }
 
-        if ($process->isProcessing()) {
-            return [
-                'message' => 'Files are being processed.'
-            ];
-        }
-
-        if ($process->isExpired()) {
-            return [
-                'message' => 'Process expired.'
-            ];
-        }
-
-        if ($process->hasReceivedFile())
-        {
-            return [
-                'message' => 'We already got a file for this process.'
-            ];
-        }
-
-        return view('upload-file', compact('process'));
+        return view('upload', compact('process'));
     }
 
     /**

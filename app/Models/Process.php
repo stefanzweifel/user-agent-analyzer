@@ -68,6 +68,12 @@ class Process extends UuidModel implements HasMedia
         return !is_null($this->start_at) && $this->start_at->isPast() && !$this->isFinished();
     }
 
+    public function processingDuration($diffType = 'InSeconds')
+    {
+        $methodName = "diff{$diffType}";
+        return $this->finished_at->$methodName($this->start_at);
+    }
+
     public function getReport()
     {
         return $this->userAgents()

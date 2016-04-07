@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'noreply@wnx.ch', 'name' => 'UA Analyzer'],
+    'from' => ['address' => 'noreply@wnx.ch', 'name' => 'User Agent Analyzer'],
 
     /*
     |--------------------------------------------------------------------------
