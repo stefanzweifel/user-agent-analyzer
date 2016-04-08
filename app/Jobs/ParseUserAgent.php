@@ -3,15 +3,18 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\Jobs\Notifications\SendSuccessNotification;
 use App\Models\UserAgent;
+use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Jenssegers\Agent\Agent;
 
 class ParseUserAgent extends Job implements ShouldQueue
 {
-    use InteractsWithQueue, SerializesModels;
+    use InteractsWithQueue, SerializesModels, DispatchesJobs;
 
     protected $userAgent;
 
@@ -32,24 +35,48 @@ class ParseUserAgent extends Job implements ShouldQueue
      */
     public function handle(Agent $agent)
     {
-        $agent = $agent;
-        $agent->setUserAgent($this->userAgent->ua_string);
+        // Cache this query forever. Because User Agents should never change
+        $isAlreadyParsed = UserAgent::where('ua_string', $this->userAgent->ua_string)->processed()->first();
 
-        if ($agent->isMobile()) {
-            $this->userAgent->update(['device_type_id' => 3]);
-        }
-        else if ($agent->isTablet()) {
-            $this->userAgent->update(['device_type_id' => 2]);
-        }
-        else if (!$agent->isTablet() && !$agent->isMobile()) {
-            $this->userAgent->update(['device_type_id' => 1]);
+        if ($isAlreadyParsed) {
+
+            $parsedDeviceTypeId = $isAlreadyParsed->device_type_id;
+            \Log::info('Parsed By Database');
         }
         else {
-            $this->userAgent->update(['device_type_id' => 4]);
+
+            $agent->setUserAgent($this->userAgent->ua_string);
+
+            if ($agent->isTablet()) {
+                $parsedDeviceTypeId = 2;
+            }
+            else if ($agent->isMobile()) {
+                $parsedDeviceTypeId = 3;
+            }
+            else if (!$agent->isTablet() && !$agent->isMobile()) {
+                $parsedDeviceTypeId = 1;
+            }
+            else {
+                $parsedDeviceTypeId = 4;
+            }
+
+        }
+
+        // Mass Update Models
+        $userAgentsToUpdate = $this->userAgent->process->userAgents()->notProcessed()->where('ua_string', $this->userAgent->ua_string)->get();
+
+        foreach ($userAgentsToUpdate as $userAgentToUpdate) {
+            $userAgentToUpdate->update(['device_type_id' => $parsedDeviceTypeId]);
         }
 
 
-        // TODO: If this was the last user agent, mark process as finished
-        // $this->process->update(['finished_at' => Carbon::now()]);
+        // Are there any UserAgents left? If no, send SuccessNotification
+        $notProcessed = $this->userAgent->process->userAgents()->notProcessed()->count();
+
+        if ($notProcessed == 0) {
+            $this->userAgent->process->update(['finished_at' => Carbon::now()]);
+
+            $this->dispatch(new CreateReport($this->userAgent->process));
+        }
     }
 }

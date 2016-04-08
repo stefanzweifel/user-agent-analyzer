@@ -3,15 +3,17 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\Jobs\ParseUserAgent;
 use App\Models\Process;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Mail\Mailer as Mail;
 
-class SendUploadNotificationMail extends Job implements ShouldQueue
+class StartParsingGroupedByUserAgent extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
+    use DispatchesJobs;
 
     protected $process;
 
@@ -30,13 +32,12 @@ class SendUploadNotificationMail extends Job implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Mail $mail)
+    public function handle()
     {
-        $mail->send('emails.upload-notification', ['process' => $this->process], function($m){
+        $uniqueUserAgents = $this->process->userAgents()->groupBy('ua_string')->get();
 
-            $m->to($this->process->email);
-            $m->subject("We're ready to receive your User Agent data");
-
-        });
+        foreach ($uniqueUserAgents as $userAgent) {
+            $this->dispatch(new ParseUserAgent($userAgent));
+        }
     }
 }

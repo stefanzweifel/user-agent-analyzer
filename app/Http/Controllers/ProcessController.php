@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Requests\CreateProcessRequest;
 use App\Http\Requests\UploadFileRequest;
-use App\Jobs\SendUploadNotificationMail;
+use App\Jobs\Notifications\SendUploadNotificationMail;
 use App\Jobs\ReadCsvFile;
 use App\Models\Process;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProcessController extends Controller
@@ -22,7 +23,7 @@ class ProcessController extends Controller
     {
         $data = $request->all();
         // TODO: Move ExpiresAt Setter to Model
-        $data['expires_at'] = \Carbon\Carbon::parse("1 day");
+        $data['expires_at'] = Carbon::parse("1 day");
         $process = $processModel->create($data);
 
         $this->dispatch(new SendUploadNotificationMail($process));
@@ -38,12 +39,6 @@ class ProcessController extends Controller
      */
     public function show(Request $request, Process $process)
     {
-        if ($process->isFinished()) {
-
-            // We should display data here
-            $report = $process->getReport();
-        }
-
         return view('upload', compact('process'));
     }
 
@@ -57,10 +52,11 @@ class ProcessController extends Controller
     public function update(UploadFileRequest $request, Process $process)
     {
         $process->addMedia($request->file('file'))->toCollection('csv-files');
+        $process->update(['start_at' => Carbon::now()]);
 
         $this->dispatch(new ReadCsvFile($process));
 
-        return redirect()->route('process.show', [$process->id]);
+        return redirect()->route('process.show', [$process->id])->withSuccess('File uploaded.');
     }
 
 }

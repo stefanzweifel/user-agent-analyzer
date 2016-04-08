@@ -24,6 +24,8 @@
                 </div>
             </section>
 
+            {!! var_dump($process->report->toArray()) !!}
+
             <canvas id="ua-report" class="mv4"></canvas>
 
 
@@ -35,7 +37,6 @@
                 <li><a href="#" id="js-download--image" taget="blank" download="ua-diagram.png" class="link dim">PNG</a></li>
             </ul>
 
-
             <p class="mv4 i dim f6">This report will be deleted in {{ $process->finished_at->diffForhumans() }}</p>
 
 
@@ -44,7 +45,7 @@
             <h3>Give us a minute.</h3>
             <p class="lh-copy">We're currently processing your uploaded file. This shouldn't take longer than a few minutes (depending on the size of your file). Check back in a minute or wait for an email from us.</p>
 
-            <p class="lh-copy i f6">Processing started at {{ $process->start_at->diffForHumans() }}</p>
+            <p class="lh-copy i f6">Processing started {{ $process->start_at->diffForHumans() }}</p>
 
         @elseif($process->isExpired())
 
@@ -64,12 +65,22 @@
                 Alright. You can now upload a CSV file with your data. The User Agent string has to be in the first column! Your dataset will be processed and you get another mail with your results.
             </p>
 
-            {!! Form::open(['route' => ['process.update', $process->id], 'method' => 'PATCH', 'files' => true]) !!}
+            @if (!Session::has('success'))
 
-                {!! Form::file('file', ['class' => 'input-reset mv2 pa2 w-100']) !!}
-                <button type="submit" class="btn btn-success btn-large">Upload and start process</button>
+                {!! Form::open(['route' => ['process.update', $process->id], 'method' => 'PATCH', 'files' => true]) !!}
 
-            {!! Form::close() !!}
+                    {!! Form::file('file', ['class' => 'input-reset mv2 pa2 w-100']) !!}
+                    <button type="submit" class="btn btn-success btn-large">Upload and start process</button>
+
+                {!! Form::close() !!}
+
+            @else
+
+                <div class="ba pa3 measure">
+                    {{ session('success') }}
+                </div>
+
+            @endif
 
             <p class="lh-copy f6 i">
                 This upload will expire in {{ $process->expires_at->diffForHumans() }}

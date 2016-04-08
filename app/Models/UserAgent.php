@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\Models\DeviceType;
 use App\Models\Process;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserAgent extends UuidModel
 {
+    use SoftDeletes;
+
     protected $fillable = ['process_id', 'ua_string', 'device_type_id'];
 
     /**
@@ -28,4 +31,32 @@ class UserAgent extends UuidModel
     {
         return $this->belongsTo(DeviceType::class);
     }
+
+    /**
+     * Query scope "notProcessed".
+     *
+     * @param   Illuminate\Database\Query\Builder   $query
+     * @return  Illuminate\Database\Query\Builder
+     */
+    public function scopeNotProcessed($query)
+    {
+        return $query->where('device_type_id', 0);
+    }
+
+    /**
+     * Query scope "processed".
+     *
+     * @param   Illuminate\Database\Query\Builder   $query
+     * @return  Illuminate\Database\Query\Builder
+     */
+    public function scopeProcessed($query)
+    {
+        return $query->where('device_type_id', '!=', 0);
+    }
+
+    public function isProcessed()
+    {
+        return $this->device_type_id === 0;
+    }
+
 }

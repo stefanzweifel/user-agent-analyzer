@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Maatwebsite\Excel\Excel;
 
 class ReadCsvFile extends Job implements ShouldQueue
 {
@@ -17,6 +18,10 @@ class ReadCsvFile extends Job implements ShouldQueue
     use DispatchesJobs;
 
     protected $process;
+
+    protected $excel;
+
+    protected $userAgent;
 
     /**
      * Create a new job instance.
@@ -30,30 +35,37 @@ class ReadCsvFile extends Job implements ShouldQueue
 
     /**
      * Execute the job.
-     *
+     *x
      * @return void
      */
-    public function handle()
+    public function handle(Carbon $carbon, Excel $excel)
     {
-        $this->process->update(['start_at' => Carbon::now()]);
+        $this->excel = $excel;
+
+        $this->process->update(['start_at' => $carbon->now()]);
         $files = $this->process->getMedia('csv-files');
 
         foreach ($files as $file) {
-
-            \Excel::load($file->getPath(), function($reader) {
-
-                foreach ($reader->get() as $row) {
-
-                    $userAgent = UserAgent::create([
-                        'ua_string' => $row->useragent,
-                        'process_id' => $this->process->id
-                    ]);
-
-                    $this->dispatch(new \App\Jobs\ParseUserAgent($userAgent));
-                }
-
-            });
-
+            $this->readFile($file);
         }
+
+        $this->dispatch(new StartParsingGroupedByUserAgent($this->process));
+    }
+
+    /**
+     * Read CSV File and create UserAgent Records
+     * @param  File $file
+     * @return void
+     */
+    public function readFile($file)
+    {
+        $this->excel->load($file->getPath(), function ($reader) {
+            foreach ($reader->get() as $row) {
+                $userAgent = UserAgent::create([
+                    'ua_string' => $row->useragent,
+                    'process_id' => $this->process->id
+                ]);
+            }
+        });
     }
 }

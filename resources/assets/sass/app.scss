@@ -1,8 +1,13 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,300,500,700|Permanent+Marker');
+@import "node_modules/tachyons/css/tachyons";
 
 html, body {
     font-family: 'Roboto';
     color: #212121;
+}
+
+.marker {
+    font-family: 'Permanent Marker', cursive;
 }
 
 .brand {
@@ -11,4 +16,8 @@ html, body {
 
 .red {
     color: #e53935;
+}
+
+.pointer {
+    cursor: pointer;
 }

@@ -7,10 +7,11 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Process extends UuidModel implements HasMedia
 {
-    use HasMediaTrait;
+    use HasMediaTrait, SoftDeletes;
 
     protected $fillable = ['email', 'finished_at', 'expires_at', 'start_at', 'finished_at'];
 
@@ -74,14 +75,24 @@ class Process extends UuidModel implements HasMedia
         return $this->finished_at->$methodName($this->start_at);
     }
 
-    public function getReport()
+    public function getReportData()
     {
         return $this->userAgents()
             ->select([
-                \DB::raw("count('id') as count"),
+                \DB::raw("count(id) AS count"),
                 'device_type_id'
             ])
             ->groupBy('device_type_id')->get();
+    }
+
+    /**
+     * Relationship with the Report model.
+     *
+     * @return    Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function report()
+    {
+        return $this->hasOne(Report::class);
     }
 
 }

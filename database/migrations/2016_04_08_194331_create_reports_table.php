@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserAgentsTable extends Migration
+class CreateReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,17 +12,19 @@ class CreateUserAgentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_agents', function (Blueprint $table) {
-            $table->string('id', 36);
+        Schema::create('reports', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('process_id', 36);
-            $table->string('ua_string');
-            $table->integer('device_type_id');
+
+            $table->integer('total');
+            $table->integer('desktop');
+            $table->integer('tablet');
+            $table->integer('mobile');
+            $table->integer('other');
+            $table->integer('unkown');
+
             $table->timestamps();
             $table->softDeletes();
-
-            $table->primary('id');
-            $table->index('process_id');
-            $table->index('ua_string');
         });
     }
 
@@ -33,6 +35,6 @@ class CreateUserAgentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_agents');
+        Schema::drop('reports');
     }
 }

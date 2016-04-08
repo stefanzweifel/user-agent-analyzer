@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Notifications;
 
 use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendSuccessNotification extends Job implements ShouldQueue
+class SendFailureNotification extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
@@ -28,6 +28,6 @@ class SendSuccessNotification extends Job implements ShouldQueue
      */
     public function handle()
     {
-        // Send Success Notification and Link to Summary Page
+        // Send Notification that Job failed
     }
 }
