@@ -33,7 +33,6 @@
 
             <footer class="pv3 pv4-m pv4-l mid-gray">
                 <div class="mt3">
-                    <a class="f6 dib ph2 link mid-gray dim" href="https://stefanzweifel.io/imprint">Terms of Service</a>
                     <a class="f6 dib ph2 link mid-gray dim" href="https://stefanzweifel.io/imprint">Imprint</a>
                     <a class="f6 dib ph2 link mid-gray dim" href="https://stefanzweifel.io">A sideproject by stefanzweifel</a>
                 </div>
