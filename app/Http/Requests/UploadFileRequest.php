@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-
 class UploadFileRequest extends Request
 {
     /**
@@ -24,7 +22,7 @@ class UploadFileRequest extends Request
     public function rules()
     {
         return [
-            'file' => ['required', 'mimes:csv,txt']
+            'file' => ['required', 'mimes:csv,txt'],
         ];
     }
 }

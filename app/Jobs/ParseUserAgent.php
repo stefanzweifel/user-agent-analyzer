@@ -2,8 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Job;
-use App\Jobs\Notifications\SendSuccessNotification;
+
 use App\Models\UserAgent;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -40,24 +39,18 @@ class ParseUserAgent extends Job implements ShouldQueue
 
         if ($isAlreadyParsed) {
             $parsedDeviceTypeId = $isAlreadyParsed->device_type_id;
-        }
-        else {
-
+        } else {
             $agent->setUserAgent($this->userAgent->ua_string);
 
             if ($agent->isTablet() && $agent->isMobile()) {
                 $parsedDeviceTypeId = 2;
-            }
-            else if ($agent->isMobile()) {
+            } elseif ($agent->isMobile()) {
                 $parsedDeviceTypeId = 3;
-            }
-            else if ($agent->isRobot()) {
+            } elseif ($agent->isRobot()) {
                 $parsedDeviceTypeId = 4;
-            }
-            else if (!$agent->isTablet() && !$agent->isMobile()) {
+            } elseif (!$agent->isTablet() && !$agent->isMobile()) {
                 $parsedDeviceTypeId = 1;
-            }
-            else {
+            } else {
                 $parsedDeviceTypeId = 5;
             }
         }
@@ -68,7 +61,6 @@ class ParseUserAgent extends Job implements ShouldQueue
         foreach ($userAgentsToUpdate as $userAgentToUpdate) {
             $userAgentToUpdate->update(['device_type_id' => $parsedDeviceTypeId]);
         }
-
 
         // Are there any UserAgents left? If no, send SuccessNotification
         $notProcessed = $this->userAgent->process->userAgents()->notProcessed()->count();

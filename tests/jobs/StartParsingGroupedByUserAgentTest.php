@@ -4,9 +4,7 @@ use App\Jobs\ParseUserAgent;
 use App\Jobs\StartParsingGroupedByUserAgent;
 use App\Models\Process;
 use App\Models\UserAgent;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class StartParsingGroupedByUserAgentTest extends TestCase
 {
@@ -19,8 +17,8 @@ class StartParsingGroupedByUserAgentTest extends TestCase
 
         $process = factory(Process::class)->create();
         $userAgent = factory(UserAgent::class)->create([
-            'process_id' => $process->id,
-            'device_type_id' => 0
+            'process_id'     => $process->id,
+            'device_type_id' => 0,
         ]);
 
         $job = new StartParsingGroupedByUserAgent($process);
@@ -37,5 +35,4 @@ class StartParsingGroupedByUserAgentTest extends TestCase
         $job = new StartParsingGroupedByUserAgent($process);
         $job->handle();
     }
-
 }

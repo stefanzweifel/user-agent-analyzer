@@ -3,11 +3,11 @@
 namespace App\Jobs\Notifications;
 
 use App\Jobs\Job;
+use App\Models\Process;
 use Illuminate\Contracts\Mail\Mailer as Mail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Process;
 
 class SendSuccessNotification extends Job implements ShouldQueue
 {

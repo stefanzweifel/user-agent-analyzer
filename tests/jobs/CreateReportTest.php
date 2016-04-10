@@ -5,9 +5,7 @@ use App\Jobs\Notifications\SendSuccessNotification;
 use App\Models\Process;
 use App\Models\Report;
 use App\Models\UserAgent;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class CreateReportTest extends TestCase
 {
@@ -16,9 +14,9 @@ class CreateReportTest extends TestCase
     /** @test */
     public function it_creates_a_new_report_for_parsed_user_agents()
     {
-        $process    = factory(Process::class)->create();
+        $process = factory(Process::class)->create();
         $userAgents = factory(UserAgent::class, 100)->create(['process_id' => $process->id]);
-        $report     = new Report();
+        $report = new Report();
 
         $job = new CreateReport($process);
         $job->handle($report);
@@ -26,9 +24,8 @@ class CreateReportTest extends TestCase
         $this->seeInDatabase('reports', [
             'process_id' => $process->id,
             'other'      => 0,
-            'total'      => 100
+            'total'      => 100,
         ]);
-
     }
 
     /** @test */
@@ -36,12 +33,11 @@ class CreateReportTest extends TestCase
     {
         $this->expectsJobs(SendSuccessNotification::class);
 
-        $process    = factory(Process::class)->create();
+        $process = factory(Process::class)->create();
         $userAgents = factory(UserAgent::class, 1)->create(['process_id' => $process->id]);
-        $report     = new Report();
+        $report = new Report();
 
         $job = new CreateReport($process);
         $job->handle($report);
     }
-
 }

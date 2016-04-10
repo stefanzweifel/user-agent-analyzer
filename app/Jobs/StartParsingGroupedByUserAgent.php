@@ -2,8 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Job;
-use App\Jobs\ParseUserAgent;
 use App\Models\Process;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
