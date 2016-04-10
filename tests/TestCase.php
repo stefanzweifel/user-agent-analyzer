@@ -20,6 +20,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
+        \Artisan::call('migrate');
+        \Artisan::call('db:seed');
+
         return $app;
     }
 }

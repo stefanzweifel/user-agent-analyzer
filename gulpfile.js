@@ -13,4 +13,13 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app.scss');
+    mix.browserify('main.js');
+    mix.version(['css/app.css', 'js/main.js']);
+
+    mix.browserSync({
+        proxy: 'ua.app:8000'
+    });
+
+    mix.phpUnit();
+
 });
