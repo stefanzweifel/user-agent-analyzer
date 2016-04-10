@@ -12,6 +12,23 @@ class UserAgent extends UuidModel
 
     protected $fillable = ['process_id', 'ua_string', 'device_type_id'];
 
+    protected $appends = ['device_type_name'];
+
+    /**
+     * Retrieve the deviceTypeName attribute.
+     *
+     * @param   mixed
+     * @return  string
+     */
+    public function getDeviceTypeNameAttribute($value)
+    {
+        if ($this->deviceType) {
+            return $this->deviceType->name;
+        }
+
+        return 'not parsed yet';
+    }
+
     /**
      * Relationship with the Process model.
      *

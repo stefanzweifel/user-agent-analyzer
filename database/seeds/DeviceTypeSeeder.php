@@ -15,6 +15,7 @@ class DeviceTypeSeeder extends Seeder
         DeviceType::create(['name' => 'Desktop']);
         DeviceType::create(['name' => 'Tablet']);
         DeviceType::create(['name' => 'Mobile']);
+        DeviceType::create(['name' => 'Robot']);
         DeviceType::create(['name' => 'unkown']);
     }
 }

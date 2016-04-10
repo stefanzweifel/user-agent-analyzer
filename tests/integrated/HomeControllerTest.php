@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+use App\Jobs\Notifications\SendUploadNotificationMail;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class HomeControllerTest extends TestCase
 {
@@ -27,7 +28,7 @@ class HomeControllerTest extends TestCase
     /** @test */
     public function it_redirects_if_valid_email_is_passed()
     {
-        $this->expectsJobs(App\Jobs\SendUploadNotificationMail::class);
+        $this->expectsJobs(SendUploadNotificationMail::class);
 
         $this->visit('/')
             ->type('foo@bar.com', 'email')

@@ -16,7 +16,7 @@ class CreateUserAgentsTable extends Migration
             $table->string('id', 36);
             $table->string('process_id', 36);
             $table->string('ua_string');
-            $table->integer('device_type_id');
+            $table->integer('device_type_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

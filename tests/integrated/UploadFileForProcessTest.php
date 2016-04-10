@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Process;
+use App\Models\Report;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -82,6 +83,7 @@ class UploadFileForProcessTest extends TestCase
         $pathToTestFile = base_path('tests/support/ua-test.csv');
         $process        = factory(Process::class)->create(['finished_at' => Carbon::parse("1 minute ago")]);
         $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
+        $report        = factory(Report::class)->create(['process_id' => $process->id]);
 
         $this->visit("resource/{$process->id}")
             ->see("Data processed. Here's your report.");

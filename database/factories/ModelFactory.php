@@ -22,7 +22,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Models\DeviceType::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name
+        'name' => $faker->randomElement(['Desktop', 'Mobile', 'Tablet', 'other', 'unkown'])
     ];
 });
 
@@ -39,7 +39,7 @@ $factory->define(App\Models\UserAgent::class, function (Faker\Generator $faker) 
     return [
         'ua_string' => $faker->userAgent,
         'process_id' => factory(App\Models\Process::class)->create()->id,
-        'device_type_id' => factory(App\Models\DeviceType::class)->create()->id
+        'device_type_id' => $faker->numberBetween(0,4)
     ];
 });
 

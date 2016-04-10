@@ -7,38 +7,35 @@
         @if ($process->isFinished())
 
             <h3>Data processed. Here's your report.</h3>
-            <p class="lh-copy">We parsed your file in {{ $process->processingDuration('InSeconds') }} seconds.</p>
+            <p class="lh-copy">We parsed your file in {{ $process->processingDuration('InSeconds') }} seconds and detected <strong>{{ $process->report->total }} User Agents</strong>.</p>
 
             <section class="cf">
                 <div class="fl mv3 mv0-ns w-100 w-33-ns">
-                    <p class="f2 ma0 b red">10</p>
+                    <p class="f2 ma0 b red">{{ $process->report->desktop }}</p>
                     <p class="f4 ma0 tracked ttu">Desktop</p>
                 </div>
                 <div class="fl mv3 mv0-ns w-100 w-33-ns">
-                    <p class="f2 ma0 b red">41</p>
+                    <p class="f2 ma0 b red">{{ $process->report->tablet }}</p>
                     <p class="f4 ma0 tracked ttu">Tablet</p>
                 </div>
                 <div class="fl mv3 mv0-ns w-100 w-33-ns">
-                    <p class="f2 ma0 b red">2010</p>
+                    <p class="f2 ma0 b red">{{ $process->report->mobile }}</p>
                     <p class="f4 ma0 tracked ttu">Mobile</p>
                 </div>
             </section>
 
-            {!! var_dump($process->report->toArray()) !!}
-
             <canvas id="ua-report" class="mv4"></canvas>
-
 
             <h3 class="f4 b tracked">Export</h3>
             <ul>
-                <li><a href="#" class="link dim">CSV</a></li>
-                <li><a href="#" class="link dim">XLS</a></li>
-                <li><a href="#" class="link dim">XLSX</a></li>
+                <li>
+                    {!! link_to_route('process.downloads.csv', 'CSV', [$process->id], ['class' => 'link dim']) !!}
+                </li>
+                <li>
+                    {!! link_to_route('process.downloads.xls', 'XLS', [$process->id], ['class' => 'link dim']) !!}
+                </li>
                 <li><a href="#" id="js-download--image" taget="blank" download="ua-diagram.png" class="link dim">PNG</a></li>
             </ul>
-
-            <p class="mv4 i dim f6">This report will be deleted in {{ $process->finished_at->diffForhumans() }}</p>
-
 
         @elseif($process->isProcessing())
 
@@ -106,22 +103,28 @@
 
         var data = [
             {
-                value: 300,
+                value: {{ $process->report->desktop }},
                 color:"#3F51B5",
                 highlight: "#5C6BC0",
                 label: "Desktop"
             },
             {
-                value: 50,
+                value: {{ $process->report->mobile }},
                 color: "#009688",
                 highlight: "#26A69A",
                 label: "Mobile"
             },
             {
-                value: 100,
+                value: {{ $process->report->tablet }},
                 color: "#F44336",
                 highlight: "#EF5350",
                 label: "Tablet"
+            },
+            {
+                value: {{ $process->report->unkown }},
+                color: "#ff6600",
+                highlight: "#EF5350",
+                label: "Unkown"
             }
         ]
 

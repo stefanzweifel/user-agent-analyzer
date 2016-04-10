@@ -22,7 +22,6 @@ class ProcessController extends Controller
     public function store(CreateProcessRequest $request, Process $processModel)
     {
         $data = $request->all();
-        // TODO: Move ExpiresAt Setter to Model
         $data['expires_at'] = Carbon::parse("1 day");
         $process = $processModel->create($data);
 

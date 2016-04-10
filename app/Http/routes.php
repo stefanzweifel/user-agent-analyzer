@@ -29,3 +29,14 @@ Route::patch('resource/{process}/', [
     'as' => 'process.update',
     'uses' => 'ProcessController@update'
 ]);
+
+
+Route::get('resource/{process}/downloads/xls', [
+    'as' => 'process.downloads.xls',
+    'uses' => 'ProcessXlsDownloadsController@index'
+]);
+
+Route::get('resource/{process}/downloads/csv', [
+    'as' => 'process.downloads.csv',
+    'uses' => 'ProcessCsvDownloadsController@index'
+]);

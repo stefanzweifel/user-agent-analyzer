@@ -95,4 +95,9 @@ class Process extends UuidModel implements HasMedia
         return $this->hasOne(Report::class);
     }
 
+    public function getDownloadData()
+    {
+        return $this->userAgents()->with('deviceType')->get(['process_id', 'ua_string', 'device_type_id'])->toArray();
+    }
+
 }

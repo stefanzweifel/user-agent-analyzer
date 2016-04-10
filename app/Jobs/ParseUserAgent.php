@@ -39,27 +39,27 @@ class ParseUserAgent extends Job implements ShouldQueue
         $isAlreadyParsed = UserAgent::where('ua_string', $this->userAgent->ua_string)->processed()->first();
 
         if ($isAlreadyParsed) {
-
             $parsedDeviceTypeId = $isAlreadyParsed->device_type_id;
-            \Log::info('Parsed By Database');
         }
         else {
 
             $agent->setUserAgent($this->userAgent->ua_string);
 
-            if ($agent->isTablet()) {
+            if ($agent->isTablet() && $agent->isMobile()) {
                 $parsedDeviceTypeId = 2;
             }
             else if ($agent->isMobile()) {
                 $parsedDeviceTypeId = 3;
             }
+            else if ($agent->isRobot()) {
+                $parsedDeviceTypeId = 4;
+            }
             else if (!$agent->isTablet() && !$agent->isMobile()) {
                 $parsedDeviceTypeId = 1;
             }
             else {
-                $parsedDeviceTypeId = 4;
+                $parsedDeviceTypeId = 5;
             }
-
         }
 
         // Mass Update Models
