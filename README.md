@@ -1,2 +1,7 @@
-# user-agent-analyzer
-User Agent Analyzer as a Service.
+# User Agent Analyzer
+
+> More Information coming soon!
+
+## License
+
+MIT
