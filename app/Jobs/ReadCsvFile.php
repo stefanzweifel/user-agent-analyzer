@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Job;
 use App\Models\Process;
 use App\Models\UserAgent;
 use Carbon\Carbon;
@@ -35,7 +34,8 @@ class ReadCsvFile extends Job implements ShouldQueue
 
     /**
      * Execute the job.
-     *x
+     *x.
+     *
      * @return void
      */
     public function handle(Carbon $carbon, Excel $excel)
@@ -53,8 +53,10 @@ class ReadCsvFile extends Job implements ShouldQueue
     }
 
     /**
-     * Read CSV File and create UserAgent Records
-     * @param  File $file
+     * Read CSV File and create UserAgent Records.
+     *
+     * @param File $file
+     *
      * @return void
      */
     public function readFile($file)
@@ -62,8 +64,8 @@ class ReadCsvFile extends Job implements ShouldQueue
         $this->excel->load($file->getPath(), function ($reader) {
             foreach ($reader->get() as $row) {
                 $userAgent = UserAgent::create([
-                    'ua_string' => $row->useragent,
-                    'process_id' => $this->process->id
+                    'ua_string'  => $row->useragent,
+                    'process_id' => $this->process->id,
                 ]);
             }
         });

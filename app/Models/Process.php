@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\UserAgent;
-use Carbon\Carbon;
+
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Crypt;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Process extends UuidModel implements HasMedia
 {
@@ -21,7 +20,8 @@ class Process extends UuidModel implements HasMedia
      * Retrieve the Email attribute.
      *
      * @param   mixed
-     * @return  string
+     *
+     * @return string
      */
     public function getEmailAttribute($value)
     {
@@ -32,7 +32,8 @@ class Process extends UuidModel implements HasMedia
      * Set the email attribute.
      *
      * @param   mixed
-     * @return  void
+     *
+     * @return void
      */
     public function setEmailAttribute($value)
     {
@@ -42,7 +43,7 @@ class Process extends UuidModel implements HasMedia
     /**
      * Relationship with the UserAgent model.
      *
-     * @return    Illuminate\Database\Eloquent\Relations\HasMany
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function userAgents()
     {
@@ -61,7 +62,7 @@ class Process extends UuidModel implements HasMedia
 
     public function hasReceivedFile()
     {
-        return (count($this->getMedia('csv-files')) > 0);
+        return count($this->getMedia('csv-files')) > 0;
     }
 
     public function isProcessing()
@@ -72,6 +73,7 @@ class Process extends UuidModel implements HasMedia
     public function processingDuration($diffType = 'InSeconds')
     {
         $methodName = "diff{$diffType}";
+
         return $this->finished_at->$methodName($this->start_at);
     }
 
@@ -79,8 +81,8 @@ class Process extends UuidModel implements HasMedia
     {
         return $this->userAgents()
             ->select([
-                \DB::raw("count(id) AS count"),
-                'device_type_id'
+                \DB::raw('count(id) AS count'),
+                'device_type_id',
             ])
             ->groupBy('device_type_id')->get();
     }
@@ -88,7 +90,7 @@ class Process extends UuidModel implements HasMedia
     /**
      * Relationship with the Report model.
      *
-     * @return    Illuminate\Database\Eloquent\Relations\HasOne
+     * @return Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function report()
     {
@@ -99,5 +101,4 @@ class Process extends UuidModel implements HasMedia
     {
         return $this->userAgents()->with('deviceType')->get(['process_id', 'ua_string', 'device_type_id'])->toArray();
     }
-
 }

@@ -2,9 +2,7 @@
 
 use App\Jobs\Notifications\SendUploadNotificationMail;
 use App\Models\Process;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Spinen\MailAssertions\MailTracking;
 
 class SendUploadNotificationTest extends TestCase
@@ -14,7 +12,7 @@ class SendUploadNotificationTest extends TestCase
     /** @test */
     public function it_sends_email_to_user()
     {
-        $process      = factory(Process::class)->create(['email' => 'foo@bar.com']);
+        $process = factory(Process::class)->create(['email' => 'foo@bar.com']);
         $linkToUpload = route('process.show', [$process->id]);
 
         $mail = $this->app->make('Illuminate\Contracts\Mail\Mailer');

@@ -14,11 +14,10 @@ class Report extends Model
     /**
      * Relationship with the Process model.
      *
-     * @return    Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function process()
     {
         return $this->belongsTo(Process::class);
     }
-
 }

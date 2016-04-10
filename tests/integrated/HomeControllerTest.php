@@ -2,8 +2,6 @@
 
 use App\Jobs\Notifications\SendUploadNotificationMail;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class HomeControllerTest extends TestCase
 {

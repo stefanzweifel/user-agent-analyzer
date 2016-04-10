@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\DeviceType;
-use App\Models\Process;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserAgent extends UuidModel
@@ -18,7 +16,8 @@ class UserAgent extends UuidModel
      * Retrieve the deviceTypeName attribute.
      *
      * @param   mixed
-     * @return  string
+     *
+     * @return string
      */
     public function getDeviceTypeNameAttribute($value)
     {
@@ -32,7 +31,7 @@ class UserAgent extends UuidModel
     /**
      * Relationship with the Process model.
      *
-     * @return    Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function process()
     {
@@ -42,7 +41,7 @@ class UserAgent extends UuidModel
     /**
      * Relationship with the DeviceType model.
      *
-     * @return    Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function deviceType()
     {
@@ -52,8 +51,9 @@ class UserAgent extends UuidModel
     /**
      * Query scope "notProcessed".
      *
-     * @param   Illuminate\Database\Query\Builder   $query
-     * @return  Illuminate\Database\Query\Builder
+     * @param Illuminate\Database\Query\Builder $query
+     *
+     * @return Illuminate\Database\Query\Builder
      */
     public function scopeNotProcessed($query)
     {
@@ -63,8 +63,9 @@ class UserAgent extends UuidModel
     /**
      * Query scope "processed".
      *
-     * @param   Illuminate\Database\Query\Builder   $query
-     * @return  Illuminate\Database\Query\Builder
+     * @param Illuminate\Database\Query\Builder $query
+     *
+     * @return Illuminate\Database\Query\Builder
      */
     public function scopeProcessed($query)
     {
@@ -75,5 +76,4 @@ class UserAgent extends UuidModel
     {
         return $this->device_type_id === 0;
     }
-
 }

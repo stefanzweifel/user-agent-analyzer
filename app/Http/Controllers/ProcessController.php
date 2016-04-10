@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Http\Requests\CreateProcessRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Jobs\Notifications\SendUploadNotificationMail;
@@ -14,15 +13,17 @@ use Illuminate\Http\Request;
 class ProcessController extends Controller
 {
     /**
-     * Create a new "Process"
-     * @param  CreateProcessRequest $request
-     * @param  Process              $processModel
+     * Create a new "Process".
+     *
+     * @param CreateProcessRequest $request
+     * @param Process              $processModel
+     *
      * @return return View
      */
     public function store(CreateProcessRequest $request, Process $processModel)
     {
         $data = $request->all();
-        $data['expires_at'] = Carbon::parse("1 day");
+        $data['expires_at'] = Carbon::parse('1 day');
         $process = $processModel->create($data);
 
         $this->dispatch(new SendUploadNotificationMail($process));
@@ -31,9 +32,11 @@ class ProcessController extends Controller
     }
 
     /**
-     * Display View to Upload CSV File
-     * @param  Request $request
-     * @param  Process $process
+     * Display View to Upload CSV File.
+     *
+     * @param Request $request
+     * @param Process $process
+     *
      * @return View
      */
     public function show(Request $request, Process $process)
@@ -43,9 +46,11 @@ class ProcessController extends Controller
 
     /**
      * Upload File and associate it with Process
-     * Start Process to Read given File
-     * @param  UploadFileRequest $request
-     * @param  Process           $process
+     * Start Process to Read given File.
+     *
+     * @param UploadFileRequest $request
+     * @param Process           $process
+     *
      * @return Redirect
      */
     public function update(UploadFileRequest $request, Process $process)
@@ -57,5 +62,4 @@ class ProcessController extends Controller
 
         return redirect()->route('process.show', [$process->id])->withSuccess('File uploaded.');
     }
-
 }
