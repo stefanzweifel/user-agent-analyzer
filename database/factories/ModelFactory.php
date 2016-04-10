@@ -39,7 +39,7 @@ $factory->define(App\Models\UserAgent::class, function (Faker\Generator $faker) 
     return [
         'ua_string' => $faker->userAgent,
         'process_id' => factory(App\Models\Process::class)->create()->id,
-        'device_type_id' => $faker->numberBetween(0,4)
+        'device_type_id' => $faker->numberBetween(1,5)
     ];
 });
 

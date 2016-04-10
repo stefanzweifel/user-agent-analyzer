@@ -16,12 +16,13 @@ class CreateReportsTable extends Migration
             $table->increments('id');
             $table->string('process_id', 36);
 
-            $table->integer('total');
-            $table->integer('desktop');
-            $table->integer('tablet');
-            $table->integer('mobile');
-            $table->integer('other');
-            $table->integer('unkown');
+            $table->integer('total')->default(0);
+            $table->integer('desktop')->default(0);
+            $table->integer('tablet')->default(0);
+            $table->integer('mobile')->default(0);
+            $table->integer('robots')->default(0);
+            $table->integer('other')->default(0);
+            $table->integer('unkown')->default(0);
 
             $table->timestamps();
             $table->softDeletes();
