@@ -4,8 +4,6 @@ use App\Models\Process;
 use App\Models\Report;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class UploadFileForProcessTest extends TestCase
 {
@@ -49,7 +47,7 @@ class UploadFileForProcessTest extends TestCase
     /** @test */
     public function it_shows_error_message_if_process_was_not_found()
     {
-        $response = $this->call('GET', "resource/not-an-id");
+        $response = $this->call('GET', 'resource/not-an-id');
         $this->assertEquals(404, $response->status());
 
         // TODO
@@ -70,7 +68,7 @@ class UploadFileForProcessTest extends TestCase
     public function it_shows_error_message_if_we_already_got_a_file_for_this_process()
     {
         $pathToTestFile = base_path('tests/support/ua-test.csv');
-        $process        = factory(Process::class)->create();
+        $process = factory(Process::class)->create();
         $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
 
         $response = $this->visit("resource/{$process->id}")
@@ -81,9 +79,9 @@ class UploadFileForProcessTest extends TestCase
     public function it_shows_message_if_process_is_already_finished()
     {
         $pathToTestFile = base_path('tests/support/ua-test.csv');
-        $process        = factory(Process::class)->create(['finished_at' => Carbon::parse("1 minute ago")]);
+        $process = factory(Process::class)->create(['finished_at' => Carbon::parse('1 minute ago')]);
         $process->addMedia($pathToTestFile)->preservingOriginal()->toCollection('csv-files');
-        $report        = factory(Report::class)->create(['process_id' => $process->id]);
+        $report = factory(Report::class)->create(['process_id' => $process->id]);
 
         $this->visit("resource/{$process->id}")
             ->see("Data processed. Here's your report.");

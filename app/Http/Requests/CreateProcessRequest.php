@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-
 class CreateProcessRequest extends Request
 {
     /**
@@ -24,7 +22,7 @@ class CreateProcessRequest extends Request
     public function rules()
     {
         return [
-            'email' => ['required', 'email']
+            'email' => ['required', 'email'],
         ];
     }
 }

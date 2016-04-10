@@ -4,9 +4,7 @@ use App\Jobs\CreateReport;
 use App\Jobs\ParseUserAgent;
 use App\Models\Process;
 use App\Models\UserAgent;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Jenssegers\Agent\Agent;
 
 class ParseUserAgentTest extends TestCase
@@ -29,9 +27,9 @@ class ParseUserAgentTest extends TestCase
         $process = factory(Process::class)->create();
         $userAgent = factory(UserAgent::class)->create([
             'process_id'     => $process->id,
-            'device_type_id' => 0
+            'device_type_id' => 0,
         ]);
-        $agent  = app()->make(Agent::class);
+        $agent = app()->make(Agent::class);
 
         $job = new ParseUserAgent($userAgent);
         $job->handle($agent);
@@ -44,10 +42,10 @@ class ParseUserAgentTest extends TestCase
 
         $process = factory(Process::class)->create();
         $userAgent = factory(UserAgent::class, 5)->create([
-            'process_id' => $process->id,
-            'device_type_id' => 0
+            'process_id'     => $process->id,
+            'device_type_id' => 0,
         ]);
-        $agent  = app()->make(Agent::class);
+        $agent = app()->make(Agent::class);
 
         $job = new ParseUserAgent($userAgent->first());
         $job->handle($agent);
@@ -58,25 +56,24 @@ class ParseUserAgentTest extends TestCase
     {
         $process = factory(Process::class)->create();
         $userAgents = factory(UserAgent::class, 2)->create([
-            'process_id' => $process->id,
+            'process_id'     => $process->id,
             'device_type_id' => 0,
-            'ua_string' => 'Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5'
+            'ua_string'      => 'Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5',
 
         ]);
-        $agent  = app()->make(Agent::class);
+        $agent = app()->make(Agent::class);
 
         $job = new ParseUserAgent($userAgents->first());
         $job->handle($agent);
 
         $this->seeInDatabase('user_agents', [
-            'id' => $userAgents[0]->id,
-            'device_type_id' => 2
+            'id'             => $userAgents[0]->id,
+            'device_type_id' => 2,
         ]);
         $this->seeInDatabase('user_agents', [
-            'id' => $userAgents[1]->id,
-            'device_type_id' => 2
+            'id'             => $userAgents[1]->id,
+            'device_type_id' => 2,
         ]);
-
     }
 
     /** @test */
@@ -84,11 +81,11 @@ class ParseUserAgentTest extends TestCase
     {
         $process = factory(Process::class)->create();
         $userAgent = factory(UserAgent::class)->create([
-            'process_id' => $process->id,
+            'process_id'     => $process->id,
             'device_type_id' => 0,
-            'ua_string' => 'Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5'
+            'ua_string'      => 'Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5',
         ]);
-        $agent  = app()->make(Agent::class);
+        $agent = app()->make(Agent::class);
 
         $job = new ParseUserAgent($userAgent);
         $job->handle($agent);
@@ -96,7 +93,7 @@ class ParseUserAgentTest extends TestCase
         $this->seeInDatabase('user_agents', [
             'id'             => $userAgent->id,
             'ua_string'      => $userAgent->ua_string,
-            'device_type_id' => 2
+            'device_type_id' => 2,
         ]);
     }
 
@@ -105,11 +102,11 @@ class ParseUserAgentTest extends TestCase
     {
         $process = factory(Process::class)->create();
         $userAgent = factory(UserAgent::class)->create([
-            'process_id' => $process->id,
+            'process_id'     => $process->id,
             'device_type_id' => 0,
-            'ua_string' => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5'
+            'ua_string'      => 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5',
         ]);
-        $agent  = app()->make(Agent::class);
+        $agent = app()->make(Agent::class);
 
         $job = new ParseUserAgent($userAgent);
         $job->handle($agent);
@@ -117,7 +114,7 @@ class ParseUserAgentTest extends TestCase
         $this->seeInDatabase('user_agents', [
             'id'             => $userAgent->id,
             'ua_string'      => $userAgent->ua_string,
-            'device_type_id' => 3
+            'device_type_id' => 3,
         ]);
     }
 
@@ -126,11 +123,11 @@ class ParseUserAgentTest extends TestCase
     {
         $process = factory(Process::class)->create();
         $userAgent = factory(UserAgent::class)->create([
-            'process_id' => $process->id,
+            'process_id'     => $process->id,
             'device_type_id' => 0,
-            'ua_string' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2700.0 Safari/537.36'
+            'ua_string'      => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2700.0 Safari/537.36',
         ]);
-        $agent  = app()->make(Agent::class);
+        $agent = app()->make(Agent::class);
 
         $job = new ParseUserAgent($userAgent);
         $job->handle($agent);
@@ -138,7 +135,7 @@ class ParseUserAgentTest extends TestCase
         $this->seeInDatabase('user_agents', [
             'id'             => $userAgent->id,
             'ua_string'      => $userAgent->ua_string,
-            'device_type_id' => 1
+            'device_type_id' => 1,
         ]);
     }
 
@@ -147,11 +144,11 @@ class ParseUserAgentTest extends TestCase
     {
         $process = factory(Process::class)->create();
         $userAgent = factory(UserAgent::class)->create([
-            'process_id' => $process->id,
+            'process_id'     => $process->id,
             'device_type_id' => 0,
-            'ua_string' => 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)'
+            'ua_string'      => 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)',
         ]);
-        $agent  = app()->make(Agent::class);
+        $agent = app()->make(Agent::class);
 
         $job = new ParseUserAgent($userAgent);
         $job->handle($agent);
@@ -159,8 +156,7 @@ class ParseUserAgentTest extends TestCase
         $this->seeInDatabase('user_agents', [
             'id'             => $userAgent->id,
             'ua_string'      => $userAgent->ua_string,
-            'device_type_id' => 4
+            'device_type_id' => 4,
         ]);
     }
-
 }

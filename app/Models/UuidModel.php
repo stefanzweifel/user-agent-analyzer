@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
+use Webpatser\Uuid\Uuid;
 
 /**
  * @see http://garrettstjohn.com/article/using-uuids-laravel-eloquent-orm/
@@ -28,10 +28,10 @@ class UuidModel extends Model
 
         /**
          * Attach to the 'creating' Model Event to provide a UUID
-         * for the `id` field (provided by $model->getKeyName())
+         * for the `id` field (provided by $model->getKeyName()).
          */
         static::creating(function ($model) {
-            $model->{$model->getKeyName()} = (string)$model->generateNewId();
+            $model->{$model->getKeyName()} = (string) $model->generateNewId();
         });
     }
 

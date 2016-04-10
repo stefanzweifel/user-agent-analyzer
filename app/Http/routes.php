@@ -1,6 +1,6 @@
 <?php
 
-Route::get('test', function(){
+Route::get('test', function () {
 
     $process = App\Models\Process::first();
 
@@ -11,32 +11,31 @@ Route::get('test', function(){
 });
 
 Route::get('/', [
-    'as' => 'home',
-    'uses' => 'HomeController@index'
+    'as'   => 'home',
+    'uses' => 'HomeController@index',
 ]);
 
 Route::post('resource', [
-    'as' => 'process.store',
-    'uses' => 'ProcessController@store'
+    'as'   => 'process.store',
+    'uses' => 'ProcessController@store',
 ]);
 
 Route::get('resource/{process}', [
-    'as' => 'process.show',
-    'uses' => 'ProcessController@show'
+    'as'   => 'process.show',
+    'uses' => 'ProcessController@show',
 ]);
 
 Route::patch('resource/{process}/', [
-    'as' => 'process.update',
-    'uses' => 'ProcessController@update'
+    'as'   => 'process.update',
+    'uses' => 'ProcessController@update',
 ]);
 
-
 Route::get('resource/{process}/downloads/xls', [
-    'as' => 'process.downloads.xls',
-    'uses' => 'ProcessXlsDownloadsController@index'
+    'as'   => 'process.downloads.xls',
+    'uses' => 'ProcessXlsDownloadsController@index',
 ]);
 
 Route::get('resource/{process}/downloads/csv', [
-    'as' => 'process.downloads.csv',
-    'uses' => 'ProcessCsvDownloadsController@index'
+    'as'   => 'process.downloads.csv',
+    'uses' => 'ProcessCsvDownloadsController@index',
 ]);
