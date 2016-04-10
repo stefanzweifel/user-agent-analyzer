@@ -25,4 +25,7 @@ ratings:
 exclude_paths:
 - config/
 - tests/
+- database/migrations/
 - public/build/
+- public/js/
+- public/css/
