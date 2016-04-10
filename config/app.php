@@ -159,7 +159,6 @@ return [
         Jenssegers\Agent\AgentServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
-        Maknz\Slack\SlackServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
     ],
@@ -211,7 +210,6 @@ return [
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
-        'Slack' => Maknz\Slack\Facades\Slack::class,
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,

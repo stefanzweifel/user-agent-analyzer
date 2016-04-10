@@ -7,9 +7,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "spatie/laravel-backup": "^3.4",
         "webpatser/laravel-uuid": "^2.0",
-        "maknz/slack": "^1.7",
         "maatwebsite/excel": "~2.1.0",
         "jenssegers/agent": "^2.3",
         "spatie/laravel-medialibrary": "^3.17",
