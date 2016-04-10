@@ -112,13 +112,20 @@ return [
 
     'redis' => [
 
-        'cluster' => false,
+        'cluster' => env('REDIS_CLUSTER', false),
 
         'default' => [
             'host'     => env('REDIS_HOST', 'localhost'),
             'password' => env('REDIS_PASSWORD', null),
             'port'     => env('REDIS_PORT', 6379),
             'database' => 0,
+        ],
+
+        'default_unix' => [
+
+            'scheme' => 'unix',
+            'path' => env('REDIS_SOCK_PATH', '/tmp/redis.sock')
+
         ],
 
     ],
