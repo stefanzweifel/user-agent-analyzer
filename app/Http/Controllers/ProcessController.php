@@ -38,7 +38,7 @@ class ProcessController extends Controller
      */
     public function show(Request $request, Process $process)
     {
-        return view('upload', compact('process'));
+        return view('process.show', compact('process'));
     }
 
     /**
