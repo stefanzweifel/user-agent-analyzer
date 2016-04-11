@@ -1,15 +1,5 @@
 <?php
 
-Route::get('test', function () {
-
-    $process = App\Models\Process::first();
-
-    $test = $process->getReportData();
-
-    return $test->sum('count');
-
-});
-
 Route::get('/', [
     'as'   => 'home',
     'uses' => 'HomeController@index',
