@@ -3,9 +3,7 @@
 use App\Jobs\PurgeExpiredProcess;
 use App\Models\Process;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PurgeExpiredProcessTest extends TestCase
 {
@@ -43,7 +41,7 @@ class PurgeExpiredProcessTest extends TestCase
         $process = factory(Process::class)->create([
             'expires_at'  => Carbon::parse('2 days ago'),
             'start_at'    => Carbon::parse('yesterday'),
-            'finished_at' => Carbon::parse('yesterday')
+            'finished_at' => Carbon::parse('yesterday'),
         ]);
 
         $job = new PurgeExpiredProcess($process);
@@ -53,6 +51,4 @@ class PurgeExpiredProcessTest extends TestCase
 
         $this->assertFalse($processInDatabase->trashed());
     }
-
-
 }

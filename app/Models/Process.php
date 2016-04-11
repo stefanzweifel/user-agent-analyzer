@@ -105,8 +105,9 @@ class Process extends UuidModel implements HasMedia
     /**
      * Query scope "isExpiredScope".
      *
-     * @param   Illuminate\Database\Query\Builder   $query
-     * @return  Illuminate\Database\Query\Builder
+     * @param Illuminate\Database\Query\Builder $query
+     *
+     * @return Illuminate\Database\Query\Builder
      */
     public function scopeIsExpiredScope($query)
     {
@@ -116,8 +117,9 @@ class Process extends UuidModel implements HasMedia
     /**
      * Query scope "isNotFinishedScope".
      *
-     * @param   Illuminate\Database\Query\Builder   $query
-     * @return  Illuminate\Database\Query\Builder
+     * @param Illuminate\Database\Query\Builder $query
+     *
+     * @return Illuminate\Database\Query\Builder
      */
     public function scopeIsNotFinishedScope($query)
     {

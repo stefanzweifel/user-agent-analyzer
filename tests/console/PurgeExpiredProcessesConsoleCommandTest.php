@@ -1,12 +1,9 @@
 <?php
 
-use App\Console\Commands\PurgeExpiredProcesses;
 use App\Jobs\PurgeExpiredProcess;
 use App\Models\Process;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PurgeExpiredProcessesConsoleCommandTest extends TestCase
 {
@@ -21,5 +18,4 @@ class PurgeExpiredProcessesConsoleCommandTest extends TestCase
 
         \Artisan::call('process:purge-expired');
     }
-
 }
