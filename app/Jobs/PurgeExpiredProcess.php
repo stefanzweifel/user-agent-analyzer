@@ -30,7 +30,7 @@ class PurgeExpiredProcess extends Job implements ShouldQueue
      */
     public function handle()
     {
-        if ($this->process->isExpired() && !$this->process->isFinished()) {
+        if ($this->process->isExpired() && ! $this->process->isFinished()) {
             $this->process->delete();
         }
     }
