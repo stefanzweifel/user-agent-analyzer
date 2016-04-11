@@ -46,12 +46,10 @@ class PurgeExpiredProcesses extends Command
      */
     public function handle()
     {
-        $this->process->isExpiredScope()->isNotFinishedScope()->chunk(10, function($processes) {
+        $this->process->isExpiredScope()->isNotFinishedScope()->chunk(10, function ($processes) {
 
             foreach ($processes as $process) {
-
                 $this->dispatch(new PurgeExpiredProcess($process));
-
             }
 
         });

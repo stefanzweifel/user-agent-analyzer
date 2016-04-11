@@ -124,7 +124,7 @@ return [
         'default_unix' => [
 
             'scheme' => 'unix',
-            'path' => env('REDIS_SOCK_PATH', '/tmp/redis.sock')
+            'path'   => env('REDIS_SOCK_PATH', '/tmp/redis.sock'),
 
         ],
 
