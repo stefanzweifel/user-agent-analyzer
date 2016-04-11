@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-
 use App\Models\UserAgent;
+use Cache;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -34,8 +34,7 @@ class ParseUserAgent extends Job implements ShouldQueue
      */
     public function handle(Agent $agent)
     {
-        // Cache this query forever. Because User Agents should never change
-        $isAlreadyParsed = UserAgent::where('ua_string', $this->userAgent->ua_string)->processed()->first();
+        $isAlreadyParsed = $this->getCachedUserAgent();
 
         if ($isAlreadyParsed) {
             $parsedDeviceTypeId = $isAlreadyParsed->device_type_id;
@@ -48,7 +47,7 @@ class ParseUserAgent extends Job implements ShouldQueue
                 $parsedDeviceTypeId = 3;
             } elseif ($agent->isRobot()) {
                 $parsedDeviceTypeId = 4;
-            } elseif (!$agent->isTablet() && !$agent->isMobile()) {
+            } elseif (! $agent->isTablet() && ! $agent->isMobile()) {
                 $parsedDeviceTypeId = 1;
             } else {
                 $parsedDeviceTypeId = 5;
@@ -70,5 +69,17 @@ class ParseUserAgent extends Job implements ShouldQueue
 
             $this->dispatch(new CreateReport($this->userAgent->process));
         }
+    }
+
+    /**
+     * Search for processed UserAgent in Cache. Returns Model if found.
+     *
+     * @return UserAgent | null
+     */
+    public function getCachedUserAgent()
+    {
+        return Cache::rememberForever(base64_decode($this->userAgent->ua_string), function () {
+            return UserAgent::where('ua_string', $this->userAgent->ua_string)->processed()->first();
+        });
     }
 }

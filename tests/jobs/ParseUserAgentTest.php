@@ -14,9 +14,38 @@ class ParseUserAgentTest extends TestCase
     /** @test */
     public function it_uses_cached_user_agent()
     {
-        $this->markTestIncomplete(
-            'Implement this test!'
-        );
+        $process = factory(Process::class)->create();
+        $userAgent = factory(UserAgent::class, 1)->create([
+            'process_id'     => $process->id,
+            'device_type_id' => 0,
+            'ua_string'      => 'Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5',
+
+        ]);
+        $parsedUserAgent = factory(UserAgent::class, 1)->create([
+            'device_type_id' => 2,
+            'ua_string'      => 'Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5',
+
+        ]);
+        $agent = app()->make(Agent::class);
+
+        Cache::shouldReceive('rememberForever')
+            ->once()
+            ->withAnyArgs()
+
+            // TODO: Second argument should be a closure.
+            // ->with([
+            //     base64_decode($userAgent->ua_string),
+            //     \Mockery::type('callable')
+            // ])
+            ->andReturn($parsedUserAgent);
+
+        $job = new ParseUserAgent($userAgent);
+        $job->handle($agent);
+
+        $this->seeInDatabase('user_agents', [
+            'id'             => $userAgent->id,
+            'device_type_id' => 2,
+        ]);
     }
 
     /** @test */

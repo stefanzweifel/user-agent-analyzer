@@ -24,7 +24,7 @@ class ReadCsvFileTest extends TestCase
         $job->handle($carbon, $excel);
 
         $this->assertTrue(
-            !is_null(Process::whereId($process->id)->first()->start_at)
+            ! is_null(Process::whereId($process->id)->first()->start_at)
         );
     }
 
