@@ -3,13 +3,13 @@
 namespace App\Jobs;
 
 use App\Models\UserAgent;
+use Cache;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Jenssegers\Agent\Agent;
-use Cache;
 
 class ParseUserAgent extends Job implements ShouldQueue
 {
@@ -72,7 +72,8 @@ class ParseUserAgent extends Job implements ShouldQueue
     }
 
     /**
-     * Search for processed UserAgent in Cache. Returns Model if found
+     * Search for processed UserAgent in Cache. Returns Model if found.
+     *
      * @return UserAgent | null
      */
     public function getCachedUserAgent()
