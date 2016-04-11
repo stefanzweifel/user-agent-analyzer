@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Crypt;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -100,5 +100,29 @@ class Process extends UuidModel implements HasMedia
     public function getDownloadData()
     {
         return $this->userAgents()->with('deviceType')->get(['process_id', 'ua_string', 'device_type_id'])->toArray();
+    }
+
+    /**
+     * Query scope "isExpiredScope".
+     *
+     * @param Illuminate\Database\Query\Builder $query
+     *
+     * @return Illuminate\Database\Query\Builder
+     */
+    public function scopeIsExpiredScope($query)
+    {
+        return $query->where('expires_at', '<', Carbon::now());
+    }
+
+    /**
+     * Query scope "isNotFinishedScope".
+     *
+     * @param Illuminate\Database\Query\Builder $query
+     *
+     * @return Illuminate\Database\Query\Builder
+     */
+    public function scopeIsNotFinishedScope($query)
+    {
+        return $query->where('finished_at', null);
     }
 }
