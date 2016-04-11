@@ -56,7 +56,7 @@ class Process extends UuidModel implements HasMedia
 
     public function isFinished()
     {
-        return !is_null($this->finished_at) && $this->finished_at->isPast();
+        return ! is_null($this->finished_at) && $this->finished_at->isPast();
     }
 
     public function hasReceivedFile()
@@ -66,7 +66,7 @@ class Process extends UuidModel implements HasMedia
 
     public function isProcessing()
     {
-        return !is_null($this->start_at) && $this->start_at->isPast() && !$this->isFinished();
+        return ! is_null($this->start_at) && $this->start_at->isPast() && ! $this->isFinished();
     }
 
     public function processingDuration($diffType = 'InSeconds')
