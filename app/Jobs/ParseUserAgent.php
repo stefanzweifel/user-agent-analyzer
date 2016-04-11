@@ -47,7 +47,7 @@ class ParseUserAgent extends Job implements ShouldQueue
                 $parsedDeviceTypeId = 3;
             } elseif ($agent->isRobot()) {
                 $parsedDeviceTypeId = 4;
-            } elseif (!$agent->isTablet() && !$agent->isMobile()) {
+            } elseif (! $agent->isTablet() && ! $agent->isMobile()) {
                 $parsedDeviceTypeId = 1;
             } else {
                 $parsedDeviceTypeId = 5;
