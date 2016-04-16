@@ -8,7 +8,7 @@
     {!! Form::open(['route' => ['process.update', $process->id], 'method' => 'PATCH', 'files' => true]) !!}
 
         {!! Form::file('file', ['class' => 'input-reset mv2 pa2 w-100']) !!}
-        <button type="submit" class="btn btn--black f6 pv2 ph3 br0">Upload and start process</button>
+        <button type="submit" class="btn btn--black f6 pv2 ph3 br1 b--near-black">Upload and start process</button>
 
     {!! Form::close() !!}
 

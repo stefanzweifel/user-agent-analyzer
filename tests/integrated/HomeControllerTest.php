@@ -31,7 +31,8 @@ class HomeControllerTest extends TestCase
         $this->visit('/')
             ->type('foo@bar.com', 'email')
             ->press("Let's do this!")
-            ->seePageIs('/');
+            ->seePageIs('/')
+            ->see('We sent an email with an upload link to you.');
     }
 
     /** @test */
