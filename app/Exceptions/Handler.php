@@ -47,8 +47,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if (config('app.debug'))
-        {
+        if (config('app.debug')) {
             return $this->renderExceptionWithWhoops($e);
         }
 
@@ -72,5 +71,4 @@ class Handler extends ExceptionHandler
             $e->getHeaders()
         );
     }
-
 }
