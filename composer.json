@@ -13,7 +13,8 @@
         "spatie/laravel-medialibrary": "^3.17",
         "laravelcollective/html": "~5.0",
         "predis/predis": "~1.0",
-        "codeclimate/php-test-reporter": "^0.3.0"
+        "codeclimate/php-test-reporter": "^0.3.0",
+        "bugsnag/bugsnag-laravel": "1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
