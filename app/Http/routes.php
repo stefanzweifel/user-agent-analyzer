@@ -32,5 +32,5 @@ Route::get('resource/{process}/downloads/csv', [
 
 Route::get('terms-of-service', [
     'as' => 'terms',
-    'uses' => 'PagesController@terms'
+    'uses' => 'PagesController@terms',
 ]);
