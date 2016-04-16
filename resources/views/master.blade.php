@@ -19,7 +19,7 @@
 
             <section>
 
-                @if ($errors->has())
+                @if (isset($errors) && $errors->has())
                     <div class="ba pa3 measure red">
                         @foreach ($errors->all() as $error)
                             {{ $error }}<br>

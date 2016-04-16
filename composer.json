@@ -13,7 +13,8 @@
         "spatie/laravel-medialibrary": "^3.17",
         "laravelcollective/html": "~5.0",
         "predis/predis": "~1.0",
-        "codeclimate/php-test-reporter": "^0.3.0"
+        "codeclimate/php-test-reporter": "^0.3.0",
+        "bugsnag/bugsnag-laravel": "1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -21,7 +22,8 @@
         "phpunit/phpunit": "~4.0",
         "symfony/css-selector": "2.8.*|3.0.*",
         "symfony/dom-crawler": "2.8.*|3.0.*",
-        "spinen/laravel-mail-assertions": "^0.0.4"
+        "spinen/laravel-mail-assertions": "^0.0.4",
+        "filp/whoops": "~2.0"
     },
     "autoload": {
         "classmap": [

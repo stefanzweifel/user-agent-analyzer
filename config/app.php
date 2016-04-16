@@ -160,6 +160,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
 
     ],
 
@@ -213,6 +214,7 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Bugsnag' => Bugsnag\BugsnagLaravel\BugsnagFacade::class,
 
     ],
 
