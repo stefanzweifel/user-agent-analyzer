@@ -24,7 +24,7 @@
                 'class' => 'input-reset ba mv2 b--gray pa2 w-100 ',
                 'placeholder' => 'Your email to start the process!'
             ]) !!}
-            <button type="submit" class="btn btn-success btn-large">Let's do this!</button>
+            <button type="submit" class="btn btn--black f6 pv2 ph3 br0">Let's do this!</button>
 
         {!! Form::close() !!}
 

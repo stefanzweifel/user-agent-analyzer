@@ -1,8 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,300,500,700|Permanent+Marker');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,300,500,700|Permanent+Marker');
+@import "node_modules/tachyons-buttons/tachyons-buttons";
 @import "node_modules/tachyons/css/tachyons";
 
+
 html, body {
-    font-family: 'Roboto';
+    font-family: 'Lato';
     color: #212121;
 }
 

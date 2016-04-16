@@ -14,7 +14,7 @@
 
             <nav class="pv3 pv4-ns">
                 <a class="link brand b f3 f2-ns db mb1 mb1-ns marker" href="/" title="Home">User Agent Analyzer</a>
-                <p class="f6 f3-ns ma0 dim pointer">Get useful charts from User Agent Strings</p>
+                <p class="f6 f5-ns ma0 dim pointer">Get useful charts from User Agent Strings</p>
             </nav>
 
             <section>
