@@ -10,7 +10,7 @@
     </head>
     <body>
 
-        <div class="pa3 ph5-ns pv2-ns">
+        <div class="pa3 ph5-ns pv2-ns mb4">
 
             <nav class="pv3 pv4-ns">
                 <a class="link brand b f3 f2-ns db mb1 mb1-ns marker" href="/" title="Home">User Agent Analyzer</a>
@@ -31,14 +31,23 @@
 
             </section>
 
-            <footer class="pv3 pv4-m pv4-l mid-gray">
-                <div class="mt3">
-                    <a class="f6 dib ph2 link mid-gray dim" href="https://stefanzweifel.io/imprint">Imprint</a>
-                    <a class="f6 dib ph2 link mid-gray dim" href="https://stefanzweifel.io">A sideproject by stefanzweifel</a>
-                </div>
-            </footer>
-
         </div>
+
+        <section class="pa3 ph5-ns pv2-ns bg-dark-gray white">
+            <p class="mv2 f6">Sponsored by:</p>
+            <a href="http://bugsnag.com/" target="blank" class="link">
+                <img src="/images/bgsnag-logo.png" style="max-width: 150px;" class="mw-100 w-50 ns-w-25" alt="Bugsnag Logo">
+            </a>
+        </section>
+
+        <footer class="pa3 ph5-ns pv2-ns pv3 pv4-m pv4-l white bg-black">
+            <div class="">
+                <a class="f6 dib pv2 pv0-ns ph2 link white dim" href="https://github.com/stefanzweifel/user-agent-analyzer">Source Code</a>
+                <a class="f6 dib pv2 pv0-ns ph2 link white dim" href="/terms-of-service">Terms of Service</a>
+                <a class="f6 dib pv2 pv0-ns ph2 link white dim" href="https://stefanzweifel.io/imprint">Imprint</a>
+                <a class="f6 dib pv2 pv0-ns ph2 link white dim" href="https://stefanzweifel.io">A sideproject by stefanzweifel</a>
+            </div>
+        </footer>
 
         <script src="{{ elixir('js/main.js') }}"></script>
         @yield('scripts')

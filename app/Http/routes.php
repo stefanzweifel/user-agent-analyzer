@@ -29,3 +29,8 @@ Route::get('resource/{process}/downloads/csv', [
     'as'   => 'process.downloads.csv',
     'uses' => 'ProcessCsvDownloadsController@index',
 ]);
+
+Route::get('terms-of-service', [
+    'as' => 'terms',
+    'uses' => 'PagesController@terms',
+]);
