@@ -33,4 +33,12 @@ class HomeControllerTest extends TestCase
             ->press("Let's do this!")
             ->seePageIs('/');
     }
+
+    /** @test */
+    public function it_shows_404_page()
+    {
+        $response = $this->call('GET', '/this-route-does-not-exist');
+
+        $this->assertEquals(404, $response->getStatusCode());
+    }
 }
