@@ -31,7 +31,6 @@
         <p class="lh-copy f6">
             To prevent abuse of the system you have to provide a valid email-adress.
             We will send you a unique link to upload your file.
-            (Your email-adress will be encrypted and after 48 hours removed.)
         </p>
 
     </div>
