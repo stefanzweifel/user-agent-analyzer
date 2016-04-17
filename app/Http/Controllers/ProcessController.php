@@ -28,7 +28,7 @@ class ProcessController extends Controller
 
         $this->dispatch(new SendUploadNotificationMail($process));
 
-        return redirect()->route('home');
+        return redirect()->route('home')->withSuccess('sent');
     }
 
     /**
