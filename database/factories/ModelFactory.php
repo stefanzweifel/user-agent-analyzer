@@ -49,8 +49,8 @@ $factory->define(App\Models\Report::class, function (Faker\Generator $faker) {
     $tablet = $faker->numberBetween(10, 1000);
     $mobile = $faker->numberBetween(10, 1000);
     $other = $faker->numberBetween(10, 1000);
-    $unkown = $faker->numberBetween(10, 1000);
-    $total = $desktop + $tablet + $mobile + $other + $unkown;
+    $unknown = $faker->numberBetween(10, 1000);
+    $total = $desktop + $tablet + $mobile + $other + $unknown;
 
     return [
         'process_id' => factory(App\Models\Process::class)->create()->id,
@@ -59,6 +59,6 @@ $factory->define(App\Models\Report::class, function (Faker\Generator $faker) {
         'tablet'     => $tablet,
         'mobile'     => $mobile,
         'other'      => $other,
-        'unkown'     => $unkown,
+        'unknown'     => $unknown,
     ];
 });
