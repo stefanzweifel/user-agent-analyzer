@@ -9,7 +9,7 @@ class Report extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['process_id', 'total', 'desktop', 'tablet', 'mobile', 'other', 'unkown'];
+    protected $fillable = ['process_id', 'total', 'desktop', 'tablet', 'mobile', 'other', 'unknown'];
 
     /**
      * Relationship with the Process model.

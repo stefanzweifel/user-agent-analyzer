@@ -22,7 +22,7 @@ class CreateReportsTable extends Migration
             $table->integer('mobile')->default(0);
             $table->integer('robots')->default(0);
             $table->integer('other')->default(0);
-            $table->integer('unkown')->default(0);
+            $table->integer('unknown')->default(0);
 
             $table->timestamps();
             $table->softDeletes();
