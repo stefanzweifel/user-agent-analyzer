@@ -33,12 +33,6 @@
 
         </div>
 
-        <section class="pa3 ph5-ns pv2-ns bg-dark-gray white">
-            <p class="mv2 f6">Sponsored by:</p>
-            <a href="http://bugsnag.com/" target="blank" class="link">
-                <img src="/images/bgsnag-logo.png" style="max-width: 150px;" class="mw-100 w-50 ns-w-25" alt="Bugsnag Logo">
-            </a>
-        </section>
 
         <footer class="pa3 ph5-ns pv2-ns pv3 pv4-m pv4-l white bg-black">
             <div class="">
