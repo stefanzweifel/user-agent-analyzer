@@ -14,8 +14,9 @@
         </p>
 
         <div class="mv3">
-            <img src="//placehold.it/200x150" class="di mw-100" alt="">
-            <img src="//placehold.it/200x150" class="di mw-100" alt="">
+            <a href="/" target="blank">
+                <img src="//placehold.it/200x150" class="di w-50 mw-100" alt="">
+            </a>
         </div>
 
 

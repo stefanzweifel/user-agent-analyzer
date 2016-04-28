@@ -7,8 +7,14 @@ $red: #db2828;
 $black: #1b1c1d;
 
 html, body {
-    font-family: 'Lato';
+    font-family: 'Lato', 'Helvetica Neue', 'Arial', sans-serif;
     color: #212121;
+    background: $red;
+    font-size: 18px;
+}
+
+.application-container {
+    background: white;
 }
 
 .marker {

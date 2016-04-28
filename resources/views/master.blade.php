@@ -10,7 +10,7 @@
     </head>
     <body>
 
-        <div class="pa3 ph5-ns pv2-ns mb4">
+        <div class="pa3 ph5-ns pv3-ns application-container">
 
             <nav class="pv3 pv4-ns">
                 <a class="link brand b f3 f2-ns db mb1 mb1-ns marker" href="/" title="Home">User Agent Analyzer</a>
@@ -33,8 +33,7 @@
 
         </div>
 
-
-        <footer class="pa3 ph5-ns pv2-ns pv3 pv4-m pv4-l white bg-black">
+        <footer class="pa3 ph5-ns pv2-ns pv3 pv4-m pv4-l white">
             <div class="">
                 <a class="f6 dib pv2 pv0-ns ph2 link white dim" href="https://github.com/stefanzweifel/user-agent-analyzer">Source Code</a>
                 <a class="f6 dib pv2 pv0-ns ph2 link white dim" href="/terms-of-service">Terms of Service</a>
