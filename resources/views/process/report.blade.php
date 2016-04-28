@@ -14,6 +14,18 @@
         <p class="f2 ma0 b red">{{ $process->report->mobile }}</p>
         <p class="f4 ma0 tracked ttu">Mobile</p>
     </div>
+    <div class="fl mv3 mv0-ns w-100 w-33-ns">
+        <p class="f2 ma0 b red">{{ $process->report->robots }}</p>
+        <p class="f4 ma0 tracked ttu">Robots</p>
+    </div>
+    <div class="fl mv3 mv0-ns w-100 w-33-ns">
+        <p class="f2 ma0 b red">{{ $process->report->other }}</p>
+        <p class="f4 ma0 tracked ttu">Other</p>
+    </div>
+    <div class="fl mv3 mv0-ns w-100 w-33-ns">
+        <p class="f2 ma0 b red">{{ $process->report->unknown }}</p>
+        <p class="f4 ma0 tracked ttu">Unknown</p>
+    </div>
 </section>
 
 <canvas id="ua-report" class="mv4"></canvas>
@@ -26,67 +38,14 @@
     <li>
         {!! link_to_route('process.downloads.xls', 'XLS', [$process->id], ['class' => 'link dim']) !!}
     </li>
-    <li><a href="#" id="js-download--image" taget="blank" download="ua-diagram.png" class="link dim">PNG</a></li>
 </ul>
 
 @section('scripts')
 
     @parent
 
-    @if ($process->isFinished())
-
     <script>
-
-        var ctx = document.getElementById("ua-report").getContext("2d");
-        ctx.canvas.width = 150;
-        ctx.canvas.height = 150;
-
-
-        var data = [
-            {
-                value: {{ $process->report->desktop }},
-                color:"#3F51B5",
-                highlight: "#5C6BC0",
-                label: "Desktop"
-            },
-            {
-                value: {{ $process->report->mobile }},
-                color: "#009688",
-                highlight: "#26A69A",
-                label: "Mobile"
-            },
-            {
-                value: {{ $process->report->tablet }},
-                color: "#F44336",
-                highlight: "#EF5350",
-                label: "Tablet"
-            },
-            {
-                value: {{ $process->report->unkown }},
-                color: "#ff6600",
-                highlight: "#EF5350",
-                label: "Unkown"
-            }
-        ]
-
-        var myPieChart = new Chart(ctx).Pie(data, {
-            animation: false,
-            segmentStrokeWidth : 3,
-            percentageInnerCutout : 50,
-            legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-
-        });
-
-        var url = document.getElementById("ua-report").toDataURL();
-
-
-
-        // window.open(url);
-
-        document.getElementById("js-download--image").href = url;
-
-
+        renderChart({!! $process->report->toJson() !!})
     </script>
-    @endif
 
 @stop

@@ -1,3 +1,3 @@
-import Chart from 'chart.js';
+import ReportChart from './modules/ReportChart.js';
 
-window.Chart = Chart;
+window.renderChart = ReportChart;
